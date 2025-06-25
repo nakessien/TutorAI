@@ -1,0 +1,212 @@
+# ==================== LLM Configuration ====================
+llm:
+  model_path: "./data/models/Qwen2.5-7B-Instruct-Q4_K_M.gguf"
+  n_ctx: 4096
+  n_threads: 4
+  n_gpu_layers: 0
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 40
+  repeat_penalty: 1.1
+  max_tokens: 512
+
+  style_temperatures:
+    balanced: 0.7
+    detailed_policy: 0.3
+    practical_guide: 0.8
+
+  batch_size: 1
+  seed: -1
+  verbose: false
+
+# ==================== RAG Configuration ====================
+embedding:
+  model_name: "BAAI/bge-small-en-v1.5"
+  device: "cpu"
+  cache_folder: "./data/models/embeddings"
+  chunk_size: 500
+  chunk_overlap: 50
+  max_sequence_length: 512
+
+rag:
+  top_k: 5
+  similarity_threshold: 0.6
+  max_context_length: 2000
+  vector_db_type: "faiss"
+  vector_db_path: "./data/vectors"
+  index_type: "IndexFlatIP"
+  document_formats: ["pdf", "txt", "docx", "md"]
+  supported_languages: ["en"]
+
+# ==================== Database Configuration ====================
+database:
+  type: "sqlite"
+  path: "./data/database/preferences.db"
+  max_connections: 10
+  connection_timeout: 30
+  preference_retention_days: 90
+  conversation_retention_days: 30
+
+# ==================== Preference Learning ====================
+preference_learning:
+  learning_rate: 0.1
+  decay_factor: 0.95
+  min_samples: 3
+  conflict_threshold: 0.3
+  recent_window: 5
+  confidence_threshold: 0.6
+  update_frequency: "realtime"
+  batch_update_size: 50
+
+  style_weights:
+    balanced: 1.0
+    detailed_policy: 1.0
+    practical_guide: 1.0
+
+  track_metrics:
+    - "generation_count"
+    - "final_choice"
+    - "session_duration"
+    - "question_complexity"
+
+# ==================== API Configuration ====================
+api:
+  host: "127.0.0.1"
+  port: 8000
+  debug: true
+  reload: true
+  cors_origins: ["http://localhost:8501"]
+  cors_methods: ["GET", "POST", "PUT", "DELETE"]
+  cors_headers: ["*"]
+  max_request_size: 10485760
+  request_timeout: 300
+  api_key_required: false
+  rate_limit: "100/minute"
+
+# ==================== Frontend Configuration ====================
+frontend:
+  page_title: "TutorAI - Academic Advisor"
+  page_icon: "🎓"
+  layout: "wide"
+  initial_sidebar_state: "expanded"
+  max_chat_history: 50
+  auto_scroll: true
+  show_progress: true
+
+  theme:
+    primary_color: "#1f77b4"
+    background_color: "#ffffff"
+    secondary_background: "#f0f2f6"
+    text_color: "#262730"
+
+  features:
+    enable_style_switching: true
+    enable_preference_learning: true
+    enable_export_chat: true
+    enable_feedback: true
+    admin_hotkey: "ctrl+shift+a"
+
+# ==================== Logging Configuration ====================
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+  file_logging:
+    enabled: true
+    path: "./logs/tutor_ai.log"
+    max_size: "10MB"
+    backup_count: 5
+    rotation: "daily"
+
+  console_logging:
+    enabled: true
+    level: "INFO"
+
+  loggers:
+    llm_service: "DEBUG"
+    rag_service: "INFO"
+    preference_service: "INFO"
+    api: "INFO"
+
+# ==================== Paths Configuration ====================
+paths:
+  data_dir: "./data"
+  documents_dir: "./data/documents"
+  vectors_dir: "./data/vectors"
+  logs_dir: "./logs"
+  models_dir: "./data/models"
+  temp_dir: "./temp"
+  upload_dir: "./data/uploads"
+  export_dir: "./exports"
+  reports_dir: "./reports"
+
+# ==================== Performance Configuration ====================
+performance:
+  enable_caching: true
+  cache_ttl: 3600
+  max_cache_size: 100
+  max_concurrent_requests: 5
+  worker_threads: 2
+  memory_limit_mb: 8192
+  gc_threshold: 0.8
+  enable_metrics: true
+  metrics_interval: 60
+
+# ==================== Development Configuration ====================
+development:
+  debug_mode: true
+  mock_llm: false
+  skip_vector_db: false
+
+  test_questions:
+    - "What are the requirements for transferring majors?"
+    - "How do I apply for academic appeal?"
+    - "What is the deadline for course registration?"
+    - "What documents do I need for graduation?"
+    - "How do I request a transcript?"
+
+  sample_documents: "./data/sample_policies"
+  benchmark_mode: false
+  load_test_users: 10
+
+# ==================== Environment Configuration ====================
+environments:
+  development:
+    debug: true
+    log_level: "DEBUG"
+    reload: true
+
+  production:
+    debug: false
+    log_level: "WARNING"
+    reload: false
+    api_key_required: true
+
+  testing:
+    debug: true
+    log_level: "DEBUG"
+    mock_llm: true
+    database:
+      path: ":memory:"
+
+# ==================== Feature Flags ====================
+features:
+  experimental:
+    advanced_preference_learning: false
+    multi_modal_support: false
+    real_time_updates: false
+
+  production:
+    user_authentication: false
+    data_encryption: false
+    audit_logging: false
+    backup_system: false
+
+# ==================== Metadata ====================
+metadata:
+  version: "1.0.0"
+  build_date: "2024-01-01"
+  environment: "development"
+  description: "TutorAI - Intelligent Academic Advisor with Preference Learning"
+  author: "Academic Research Project"
+  contact: "research@university.edu"
