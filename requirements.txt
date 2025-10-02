@@ -15,7 +15,7 @@ pydantic==2.5.0
 sqlalchemy==2.0.23
 
 # ==================== 配置管理 ====================
-PyYAML==6.0.1
+PyYAML
 python-dotenv==1.0.0
 
 # ==================== 文档处理 ====================
@@ -50,4 +50,5 @@ faiss-cpu==1.7.4
 # 5. 验证安装:
 #    python -c "import sentence_transformers, fitz; print('Success!')"
 #
+
 # 注意: 已移除tokenizers的版本限制，让transformers自动选择兼容版本
